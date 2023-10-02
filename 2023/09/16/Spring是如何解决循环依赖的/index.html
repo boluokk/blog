@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Spring是如何解决循环依赖的 | 🍍Blog</title><meta name="author" content="🍍"><meta name="copyright" content="🍍"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是循环依赖? 有两个类，一个是A、一个是B。并且A和B互相引用了对象  A class123456public class A &amp;#123;	@Autowired	B b;	String name;	int age;&amp;#125;  B class1234567public class B &amp;#123;	@Autowired	A a;	String name;	int age;&amp;#125;  S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring是如何解决循环依赖的">
+<meta property="og:url" content="https://boluokk.github.io/blog/2023/09/16/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84/index.html">
+<meta property="og:site_name" content="🍍Blog">
+<meta property="og:description" content="什么是循环依赖? 有两个类，一个是A、一个是B。并且A和B互相引用了对象  A class123456public class A &amp;#123;	@Autowired	B b;	String name;	int age;&amp;#125;  B class1234567public class B &amp;#123;	@Autowired	A a;	String name;	int age;&amp;#125;  S">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://source.fomal.cc/img/default_cover_48.webp">
+<meta property="article:published_time" content="2023-09-16T12:09:34.000Z">
+<meta property="article:modified_time" content="2023-09-16T12:06:34.542Z">
+<meta property="article:author" content="🍍">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://source.fomal.cc/img/default_cover_48.webp"><link rel="shortcut icon" href="/blog/img/favicon.png"><link rel="canonical" href="https://boluokk.github.io/blog/2023/09/16/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Spring是如何解决循环依赖的',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-09-16 20:06:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://boluokk.gitee.io/blog/css/custom.css" media="defer" onload="this.media='all'"><script async src="https://boluokk.gitee.io/blog/js/fps.js"></script><script async src="https://boluokk.gitee.io/blog/js/title.js"></script><span id="fps"></span><div id="myscoll"></div><!-- hexo injector head_end start --><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/css/runtime/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/blog/assets/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw icon-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw icon-guidang1"></i><span> 归档</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://source.fomal.cc/img/default_cover_48.webp')"><nav id="nav"><span id="blog-info"><a href="/blog/" title="🍍Blog"><span class="site-name">🍍Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw icon-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw icon-guidang1"></i><span> 归档</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Spring是如何解决循环依赖的</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-16T12:09:34.000Z" title="发表于 2023-09-16 20:09:34">2023-09-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-16T12:06:34.542Z" title="更新于 2023-09-16 20:06:34">2023-09-16</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">174</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>1分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Spring是如何解决循环依赖的"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="什么是循环依赖"><a href="#什么是循环依赖" class="headerlink" title="什么是循环依赖?"></a>什么是循环依赖?</h3><blockquote>
+<p>有两个类，一个是A、一个是B。并且A和B互相引用了对象</p>
+</blockquote>
+<h3 id="A-class"><a href="#A-class" class="headerlink" title="A class"></a>A class</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	B b;</span><br><span class="line">	String name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="B-class"><a href="#B-class" class="headerlink" title="B class"></a>B class</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">B</span> &#123;</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	A a;</span><br><span class="line">	String name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Spring解决循环依赖步骤"><a href="#Spring解决循环依赖步骤" class="headerlink" title="Spring解决循环依赖步骤"></a>Spring解决循环依赖步骤</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916180832109.png" alt="image-20230916180832109"></p>
+<h3 id="1、创建A"><a href="#1、创建A" class="headerlink" title="1、创建A"></a>1、创建A</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916183444979.png" alt="image-20230916183444979"></p>
+<h3 id="2、将lambda放入三级缓存中"><a href="#2、将lambda放入三级缓存中" class="headerlink" title="2、将lambda放入三级缓存中"></a>2、将lambda放入三级缓存中</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916193029748.png" alt="image-20230916193029748"></p>
+<h3 id="3、填充属性"><a href="#3、填充属性" class="headerlink" title="3、填充属性"></a>3、填充属性</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916193130349.png" alt="image-20230916193130349"></p>
+<h3 id="4、缓存中找"><a href="#4、缓存中找" class="headerlink" title="4、缓存中找"></a>4、缓存中找</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916193250589.png" alt="image-20230916193250589"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916193411487.png" alt="image-20230916193411487"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916193430018.png" alt="image-20230916193430018"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916193453947.png" alt="image-20230916193453947"></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916193528013.png" alt="image-20230916193528013"></p>
+<h3 id="5、没找到"><a href="#5、没找到" class="headerlink" title="5、没找到"></a>5、没找到</h3><h3 id="6、创建B"><a href="#6、创建B" class="headerlink" title="6、创建B"></a>6、创建B</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916193609254.png" alt="image-20230916193609254"></p>
+<h3 id="7、将lambda放入三级缓存中"><a href="#7、将lambda放入三级缓存中" class="headerlink" title="7、将lambda放入三级缓存中"></a>7、将lambda放入三级缓存中</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916194931844.png" alt="image-20230916194931844"></p>
+<h3 id="8、填充属性"><a href="#8、填充属性" class="headerlink" title="8、填充属性"></a>8、填充属性</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916194942005.png" alt="image-20230916194942005"></p>
+<h3 id="9、缓存中找A"><a href="#9、缓存中找A" class="headerlink" title="9、缓存中找A"></a>9、缓存中找A</h3><p>再次去doGetBean，从三级缓存中拿</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916195209262.png" alt="image-20230916195209262"></p>
+<h3 id="10、找到了填充到B"><a href="#10、找到了填充到B" class="headerlink" title="10、找到了填充到B"></a>10、找到了填充到B</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916195310490.png" alt="image-20230916195310490"></p>
+<h3 id="11、将B填充到一级缓存中"><a href="#11、将B填充到一级缓存中" class="headerlink" title="11、将B填充到一级缓存中"></a>11、将B填充到一级缓存中</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916195402917.png" alt="image-20230916195402917"></p>
+<h3 id="12、将一级缓冲中B填充到A"><a href="#12、将一级缓冲中B填充到A" class="headerlink" title="12、将一级缓冲中B填充到A"></a>12、将一级缓冲中B填充到A</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916195516302.png" alt="image-20230916195516302"></p>
+<h3 id="13、初始化A"><a href="#13、初始化A" class="headerlink" title="13、初始化A"></a>13、初始化A</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916195904458.png" alt="image-20230916195904458"></p>
+<h3 id="14、将A放入到一级缓存中"><a href="#14、将A放入到一级缓存中" class="headerlink" title="14、将A放入到一级缓存中"></a>14、将A放入到一级缓存中</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://boluokk.gitee.io/blog/assets/blogImg/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84.assets/image-20230916195610648.png" alt="image-20230916195610648"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://boluokk.github.io/blog">🍍</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://boluokk.github.io/blog/2023/09/16/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84/">https://boluokk.github.io/blog/2023/09/16/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://boluokk.github.io/blog" target="_blank">🍍Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://source.fomal.cc/img/default_cover_48.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/blog/2023/09/17/node%E5%A4%9A%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" title="node多版本管理"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_33.webp" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">node多版本管理</div></div></a></div><div class="next-post pull-right"><a href="/blog/2023/09/07/Mybatis%E6%B3%A8%E5%86%8C%E6%8F%92%E4%BB%B6/" title="Mybatis注册插件"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_24.webp" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Mybatis注册插件</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/blog/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">🍍</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://gitee.com/boluokk"><i class="fab fa-github"></i><span>Follow Me</span><!--i.faa-passing.animated(style="padding-left:20px;display:inline-block;vertical-align:middle;")--><!--  svg.icon(style="height:28px;width:28px;fill:currentColor;position:relative;top:5px")--><!--    use(xlink:href='#icon-xiaoqiche')--></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://gitee.com/boluokk" target="_blank" title="Gitee"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:1352955539@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"></div><div id="welcome-info"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96"><span class="toc-number">1.</span> <span class="toc-text">什么是循环依赖?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-class"><span class="toc-number">2.</span> <span class="toc-text">A class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-class"><span class="toc-number">3.</span> <span class="toc-text">B class</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.</span> <span class="toc-text">Spring解决循环依赖步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E5%88%9B%E5%BB%BAA"><span class="toc-number">5.</span> <span class="toc-text">1、创建A</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E5%B0%86lambda%E6%94%BE%E5%85%A5%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98%E4%B8%AD"><span class="toc-number">6.</span> <span class="toc-text">2、将lambda放入三级缓存中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%A1%AB%E5%85%85%E5%B1%9E%E6%80%A7"><span class="toc-number">7.</span> <span class="toc-text">3、填充属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E7%BC%93%E5%AD%98%E4%B8%AD%E6%89%BE"><span class="toc-number">8.</span> <span class="toc-text">4、缓存中找</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E6%B2%A1%E6%89%BE%E5%88%B0"><span class="toc-number">9.</span> <span class="toc-text">5、没找到</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81%E5%88%9B%E5%BB%BAB"><span class="toc-number">10.</span> <span class="toc-text">6、创建B</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%81%E5%B0%86lambda%E6%94%BE%E5%85%A5%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98%E4%B8%AD"><span class="toc-number">11.</span> <span class="toc-text">7、将lambda放入三级缓存中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%E3%80%81%E5%A1%AB%E5%85%85%E5%B1%9E%E6%80%A7"><span class="toc-number">12.</span> <span class="toc-text">8、填充属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%E3%80%81%E7%BC%93%E5%AD%98%E4%B8%AD%E6%89%BEA"><span class="toc-number">13.</span> <span class="toc-text">9、缓存中找A</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%E3%80%81%E6%89%BE%E5%88%B0%E4%BA%86%E5%A1%AB%E5%85%85%E5%88%B0B"><span class="toc-number">14.</span> <span class="toc-text">10、找到了填充到B</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11%E3%80%81%E5%B0%86B%E5%A1%AB%E5%85%85%E5%88%B0%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E4%B8%AD"><span class="toc-number">15.</span> <span class="toc-text">11、将B填充到一级缓存中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12%E3%80%81%E5%B0%86%E4%B8%80%E7%BA%A7%E7%BC%93%E5%86%B2%E4%B8%ADB%E5%A1%AB%E5%85%85%E5%88%B0A"><span class="toc-number">16.</span> <span class="toc-text">12、将一级缓冲中B填充到A</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96A"><span class="toc-number">17.</span> <span class="toc-text">13、初始化A</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14%E3%80%81%E5%B0%86A%E6%94%BE%E5%85%A5%E5%88%B0%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E4%B8%AD"><span class="toc-number">18.</span> <span class="toc-text">14、将A放入到一级缓存中</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/09/21/JVM/" title="JVM"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_41.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="JVM"/></a><div class="content"><a class="title" href="/blog/2023/09/21/JVM/" title="JVM">JVM</a><time datetime="2023-09-21T10:09:32.000Z" title="发表于 2023-09-21 18:09:32">2023-09-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/09/17/node%E5%A4%9A%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" title="node多版本管理"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_33.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="node多版本管理"/></a><div class="content"><a class="title" href="/blog/2023/09/17/node%E5%A4%9A%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" title="node多版本管理">node多版本管理</a><time datetime="2023-09-17T06:09:30.000Z" title="发表于 2023-09-17 14:09:30">2023-09-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/09/16/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84/" title="Spring是如何解决循环依赖的"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_48.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Spring是如何解决循环依赖的"/></a><div class="content"><a class="title" href="/blog/2023/09/16/Spring%E6%98%AF%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E7%9A%84/" title="Spring是如何解决循环依赖的">Spring是如何解决循环依赖的</a><time datetime="2023-09-16T12:09:34.000Z" title="发表于 2023-09-16 20:09:34">2023-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/09/07/Mybatis%E6%B3%A8%E5%86%8C%E6%8F%92%E4%BB%B6/" title="Mybatis注册插件"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_24.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Mybatis注册插件"/></a><div class="content"><a class="title" href="/blog/2023/09/07/Mybatis%E6%B3%A8%E5%86%8C%E6%8F%92%E4%BB%B6/" title="Mybatis注册插件">Mybatis注册插件</a><time datetime="2023-09-07T03:09:38.000Z" title="发表于 2023-09-07 11:09:38">2023-09-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/09/04/HaSee%E7%AC%94%E8%AE%B0%E6%9C%AC%E8%9C%82%E9%B8%A3%E6%8A%A5%E8%AD%A6%E5%A4%84%E7%90%86/" title="HaSee笔记本蜂鸣报警处理"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_26.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="HaSee笔记本蜂鸣报警处理"/></a><div class="content"><a class="title" href="/blog/2023/09/04/HaSee%E7%AC%94%E8%AE%B0%E6%9C%AC%E8%9C%82%E9%B8%A3%E6%8A%A5%E8%AD%A6%E5%A4%84%E7%90%86/" title="HaSee笔记本蜂鸣报警处理">HaSee笔记本蜂鸣报警处理</a><time datetime="2023-09-04T04:09:05.000Z" title="发表于 2023-09-04 12:09:05">2023-09-04</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script><script defer data-pjax src="https://boluokk.gitee.io/blog/js/cat.js"></script><script defer src="https://boluokk.gitee.io/blog/js/cursor.js"></script><script async data-pjax src="https://boluokk.gitee.io/blog/js/txmap.js"></script><canvas id="universe"></canvas><script defer src="https://boluokk.gitee.io/blog/js/universe.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="🍍,🍉🍈,🍇🥥,🥝,🍊🍋,🥝🍊🍋🍌" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/blog/js/footer-username.js"></script><!-- hexo injector body_end end --></body></html>
