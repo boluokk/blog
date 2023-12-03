@@ -1,0 +1,426 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>leetcode刷题 | 🍍Blog</title><meta name="author" content="🍍"><meta name="copyright" content="🍍"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1、78. 子集 问题    解析  1非正常解法：直接看输入、输出，能找出规律。每个数字都会和前面的数字进行合并，例如1:1和空集(不包含)，2:2和空集(不包含),2和1,3：3和空集(不包含)，3和1,3和2，3和2和1   代码  123456789101112131415class Solution &amp;#123;    public List&lt;List&lt;Integer&gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode刷题">
+<meta property="og:url" content="https://boluokk.github.io/blog/2023/12/03/leetcode%E5%88%B7%E9%A2%98/index.html">
+<meta property="og:site_name" content="🍍Blog">
+<meta property="og:description" content="1、78. 子集 问题    解析  1非正常解法：直接看输入、输出，能找出规律。每个数字都会和前面的数字进行合并，例如1:1和空集(不包含)，2:2和空集(不包含),2和1,3：3和空集(不包含)，3和1,3和2，3和2和1   代码  123456789101112131415class Solution &amp;#123;    public List&lt;List&lt;Integer&gt;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://source.fomal.cc/img/default_cover_13.webp">
+<meta property="article:published_time" content="2023-12-03T08:12:22.000Z">
+<meta property="article:modified_time" content="2023-12-03T08:27:22.510Z">
+<meta property="article:author" content="🍍">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://source.fomal.cc/img/default_cover_13.webp"><link rel="shortcut icon" href="/blog/img/favicon.png"><link rel="canonical" href="https://boluokk.github.io/blog/2023/12/03/leetcode%E5%88%B7%E9%A2%98/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'leetcode刷题',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-12-03 16:27:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://boluokk.github.io/blog/css/custom.css" media="defer" onload="this.media='all'"><script async src="https://boluokk.github.io/blog/js/fps.js"></script><script async src="https://boluokk.github.io/blog/js/title.js"></script><span id="fps"></span><div id="myscoll"></div><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/css/runtime/runtime.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/blog/assets/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw icon-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw icon-guidang1"></i><span> 归档</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://source.fomal.cc/img/default_cover_13.webp')"><nav id="nav"><span id="blog-info"><a href="/blog/" title="🍍Blog"><span class="site-name">🍍Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw icon-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw icon-guidang1"></i><span> 归档</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">leetcode刷题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-03T08:12:22.000Z" title="发表于 2023-12-03 16:12:22">2023-12-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-12-03T08:27:22.510Z" title="更新于 2023-12-03 16:27:22">2023-12-03</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="leetcode刷题"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="1、78-子集"><a href="#1、78-子集" class="headerlink" title="1、78. 子集"></a>1、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subsets/">78. 子集</a></h3><blockquote>
+<p>问题</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231129205814220.png" alt="image-20231129205814220"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">非正常解法：直接看输入、输出，能找出规律。每个数字都会和前面的数字进行合并，例如<span class="number">1</span>:<span class="number">1</span>和空集(不包含)，<span class="number">2</span>:<span class="number">2</span>和空集(不包含),<span class="number">2</span>和<span class="number">1</span>,<span class="number">3</span>：<span class="number">3</span>和空集(不包含)，<span class="number">3</span>和<span class="number">1</span>,<span class="number">3</span>和<span class="number">2</span>，<span class="number">3</span>和<span class="number">2</span>和<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">subsets</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        ans.add(<span class="keyword">new</span> <span class="title class_">ArrayList</span>());</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> ans.size();</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; len; j++) &#123;</span><br><span class="line">                <span class="type">List</span> <span class="variable">temp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>(ans.get(j));</span><br><span class="line">                temp.add(nums[i]);</span><br><span class="line">                ans.add(temp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、2396-严格回文的数字"><a href="#2、2396-严格回文的数字" class="headerlink" title="2、2396. 严格回文的数字"></a>2、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/strictly-palindromic-number/">2396. 严格回文的数字</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231129211200599.png" alt="image-20231129211200599"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">此题中的任何数的n-<span class="number">2</span>进制数都是<span class="number">12</span>(非十进制,n-<span class="number">2</span>进制), 也可以暴力每个进制都去匹配一下</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isStrictlyPalindromic</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、1470-重新排列数组"><a href="#3、1470-重新排列数组" class="headerlink" title="3、1470. 重新排列数组"></a>3、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shuffle-the-array/">1470. 重新排列数组</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231130221944076.png" alt="image-20231130221944076"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个数组对半拼接</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] shuffle(<span class="type">int</span>[] nums, <span class="type">int</span> n) &#123;</span><br><span class="line">        <span class="type">int</span>[] ans = <span class="keyword">new</span> <span class="title class_">int</span>[nums.length];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, step = <span class="number">0</span>; i &lt; n; i++, step += <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">cur</span> <span class="operator">=</span> step;</span><br><span class="line">            ans[cur++] = nums[i];</span><br><span class="line">            ans[cur] = nums[n + i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、LCP-06-拿硬币"><a href="#3、LCP-06-拿硬币" class="headerlink" title="3、LCP 06. 拿硬币"></a>3、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/na-ying-bi/">LCP 06. 拿硬币</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231130222309258.png" alt="image-20231130222309258"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">偶数 = 硬币数 / <span class="number">2</span>, 奇数 = 硬币数 / <span class="number">2</span> + <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minCount</span><span class="params">(<span class="type">int</span>[] coins)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; coins.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(coins[i] % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                ans += coins[i] / <span class="number">2</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ans += coins[i] / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、1769-移动所有球到每个盒子所需的最小操作数"><a href="#4、1769-移动所有球到每个盒子所需的最小操作数" class="headerlink" title="4、1769. 移动所有球到每个盒子所需的最小操作数"></a>4、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-number-of-operations-to-move-all-balls-to-each-box/">1769. 移动所有球到每个盒子所需的最小操作数</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231201185258198.png" alt="image-20231201185258198"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、直接看示例，当前二进制数的前面到当前的距离(数字为<span class="number">1</span>)和后面的所有距离的和(数字为<span class="number">1</span>)。两层循环，外层遍历当前所有二进制数，内层遍历当前的前面的和后面的数字为<span class="number">1</span>的距离。然后每个数字装到对应下标中。</span><br><span class="line"><span class="number">2</span>、左右两次遍历，从左往右，记录小球个数和到当前的前总共需要多少步。右往左同理。</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] minOperations(String boxes) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> boxes.length();</span><br><span class="line">        <span class="type">int</span>[] ans = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; j &lt; len; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (j != i &amp;&amp; boxes.charAt(j) == <span class="string">&#x27;1&#x27;</span>) &#123;</span><br><span class="line">                    ans[i] += Math.abs(j - i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] minOperations(String boxes) &#123;</span><br><span class="line">       <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> boxes.length();</span><br><span class="line">       <span class="type">int</span>[] ans = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">       <span class="comment">// 前面的所有小球的移动数到当前</span></span><br><span class="line">       <span class="type">int</span> <span class="variable">pre</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">       <span class="comment">// 小球个数</span></span><br><span class="line">       <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1011</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">           <span class="keyword">if</span> (boxes.charAt(i - <span class="number">1</span>) == <span class="string">&#x27;1&#x27;</span>) count++;</span><br><span class="line">           ans[i] = pre + count;</span><br><span class="line">           pre += count;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       count = <span class="number">0</span>;</span><br><span class="line">       pre = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> n - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">           <span class="keyword">if</span> (boxes.charAt(i + <span class="number">1</span>) == <span class="string">&#x27;1&#x27;</span>) count++;</span><br><span class="line">           ans[i] += pre + count;</span><br><span class="line">           pre += count;</span><br><span class="line">       &#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、2656-K-个元素的最大和"><a href="#5、2656-K-个元素的最大和" class="headerlink" title="5、2656. K 个元素的最大和"></a>5、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-sum-with-exactly-k-elements/">2656. K 个元素的最大和</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231201201022969.png" alt="image-20231201201022969"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">先求出最大值，然后叠加</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maximizeSum</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="type">int</span> <span class="variable">maxValue</span> <span class="operator">=</span> nums[nums.length - <span class="number">1</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">           ans += maxValue + i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6、LCP-67-装饰树"><a href="#6、LCP-67-装饰树" class="headerlink" title="6、LCP 67. 装饰树"></a>6、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/KnLfVT/">LCP 67. 装饰树</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231202122649728.png" alt="image-20231202122649728"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">递归，先判定左子树在判定右子树。对于左边 root.left = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(-<span class="number">1</span>, expandBinaryTree(root.left), <span class="literal">null</span>); 右边同理</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val) &#123; this.val = val; &#125;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int val, TreeNode left, TreeNode right) &#123;</span></span><br><span class="line"><span class="comment"> *         this.val = val;</span></span><br><span class="line"><span class="comment"> *         this.left = left;</span></span><br><span class="line"><span class="comment"> *         this.right = right;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> TreeNode <span class="title function_">expandBinaryTree</span><span class="params">(TreeNode root)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (root.left != <span class="literal">null</span>) &#123;</span><br><span class="line">            root.left = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(-<span class="number">1</span>, expandBinaryTree(root.left), <span class="literal">null</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (root.right != <span class="literal">null</span>) &#123;</span><br><span class="line">            root.right = <span class="keyword">new</span> <span class="title class_">TreeNode</span>(-<span class="number">1</span>, <span class="literal">null</span>, expandBinaryTree(root.right));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7、2894-分类求和并作差"><a href="#7、2894-分类求和并作差" class="headerlink" title="7、2894. 分类求和并作差"></a>7、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/divisible-and-non-divisible-sums-difference/">2894. 分类求和并作差</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231202123216515.png" alt="image-20231202123216515"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">遍历，然后统计能整除的和不能整除，最后相减</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">differenceOfSums</span><span class="params">(<span class="type">int</span> n, <span class="type">int</span> m)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">success</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">fail</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i % m == <span class="number">0</span>) &#123;</span><br><span class="line">                success += i;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                fail += i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fail - success;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8、1689-十-二进制数的最少数目"><a href="#8、1689-十-二进制数的最少数目" class="headerlink" title="8、1689. 十-二进制数的最少数目"></a>8、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/partitioning-into-minimum-number-of-deci-binary-numbers/">1689. 十-二进制数的最少数目</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231202134052237.png" alt="image-20231202134052237"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">找出最大数字即可</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">minPartitions</span><span class="params">(String n)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">char</span>[] arr = n.toCharArray();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span> c : arr) &#123;</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">&#x27;9&#x27;</span>) <span class="keyword">return</span> <span class="number">9</span>;</span><br><span class="line">            <span class="keyword">if</span> (ans &lt; c) ans = c;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="9、1476-子矩形查询"><a href="#9、1476-子矩形查询" class="headerlink" title="9、1476. 子矩形查询"></a>9、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/subrectangle-queries/">1476. 子矩形查询</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231203132613323.png" alt="image-20231203132613323"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">矩阵遍历，获取</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SubrectangleQueries</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[][] rectangle;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">SubrectangleQueries</span><span class="params">(<span class="type">int</span>[][] rectangle)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.rectangle = rectangle;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateSubrectangle</span><span class="params">(<span class="type">int</span> row1, <span class="type">int</span> col1, <span class="type">int</span> row2, <span class="type">int</span> col2, <span class="type">int</span> newValue)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> row1; i &lt;= row2; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> col1; j &lt;= col2; j++) &#123;</span><br><span class="line">                rectangle[i][j] = newValue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getValue</span><span class="params">(<span class="type">int</span> row, <span class="type">int</span> col)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> rectangle[row][col];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="10、1282-用户分组"><a href="#10、1282-用户分组" class="headerlink" title="10、1282. 用户分组"></a>10、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/group-the-people-given-the-group-size-they-belong-to/">1282. 用户分组</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231203153252155.png" alt="image-20231203153252155"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将groupSizes中的数字放在相同长度的分组中。例如示例<span class="number">2</span>中的groupSizes中的<span class="number">2</span>有两个，故放在一个长度为<span class="number">2</span>的数组中(存放的是groupSizes这个数组对应数组的下标), 利用hashmap来统计相同数字，和长度，但是没有集合数组快</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; <span class="title function_">groupThePeople</span><span class="params">(<span class="type">int</span>[] groupSizes)</span> &#123;</span><br><span class="line">        List[] arrayLists = <span class="keyword">new</span> <span class="title class_">ArrayList</span>[groupSizes.length + <span class="number">1</span>]; <span class="comment">// 换成Map也行</span></span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; ans = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; groupSizes.length; i++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">key</span> <span class="operator">=</span> groupSizes[i];</span><br><span class="line">            <span class="keyword">if</span> (arrayLists[key] != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="type">List</span> <span class="variable">arrayList</span> <span class="operator">=</span> arrayLists[key];</span><br><span class="line">                <span class="keyword">if</span> (arrayList.size() + <span class="number">1</span> &gt;= key) &#123;</span><br><span class="line">                    arrayList.add(i);</span><br><span class="line">                    ans.add(arrayList);</span><br><span class="line">                    arrayLists[key] = <span class="literal">null</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    arrayList.add(i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ArrayList&lt;Integer&gt; tem = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">                tem.add(i);</span><br><span class="line">                <span class="keyword">if</span> (key == <span class="number">1</span>) &#123;</span><br><span class="line">                    ans.add(tem);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    arrayLists[key] = tem;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="11、237-删除链表中的节点"><a href="#11、237-删除链表中的节点" class="headerlink" title="11、237. 删除链表中的节点"></a>11、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/delete-node-in-a-linked-list/">237. 删除链表中的节点</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231203155539336.png" alt="image-20231203155539336"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">没有head，将当前node的下一个值前移，并且node.next = node.next.next</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deleteNode</span><span class="params">(ListNode node)</span> &#123;</span><br><span class="line">        node.val = node.next.val;</span><br><span class="line">        node.next = node.next.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="12、2011-执行操作后的变量值"><a href="#12、2011-执行操作后的变量值" class="headerlink" title="12、2011. 执行操作后的变量值"></a>12、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/final-value-of-variable-after-performing-operations/">2011. 执行操作后的变量值</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231203160234997.png" alt="image-20231203160234997"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">判定自增自减</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">finalValueAfterOperations</span><span class="params">(String[] operations)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; operations.length; i++) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">op</span> <span class="operator">=</span> operations[i];</span><br><span class="line">            <span class="keyword">if</span> (op.indexOf(<span class="string">&#x27;+&#x27;</span>) != -<span class="number">1</span>) &#123;</span><br><span class="line">                ans++;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                ans--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="13、1773-统计匹配检索规则的物品数量"><a href="#13、1773-统计匹配检索规则的物品数量" class="headerlink" title="13、1773. 统计匹配检索规则的物品数量"></a>13、<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-items-matching-a-rule/">1773. 统计匹配检索规则的物品数量</a></h3><blockquote>
+<p>题目</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//leetcode%E5%88%B7%E9%A2%98.assets/image-20231203162028938.png" alt="image-20231203162028938"></p>
+<blockquote>
+<p>解析</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">遍历比较匹配</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">countMatches</span><span class="params">(List&lt;List&lt;String&gt;&gt; items, String ruleKey, String ruleValue)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">char</span> <span class="variable">ch</span> <span class="operator">=</span> ruleKey.charAt(<span class="number">0</span>);</span><br><span class="line">        <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> ch == <span class="string">&#x27;t&#x27;</span> ? <span class="number">0</span> : ch == <span class="string">&#x27;c&#x27;</span> ? <span class="number">1</span> : <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (List&lt;String&gt; item : items) &#123;</span><br><span class="line">            <span class="keyword">if</span> (item.get(index).equals(ruleValue)) ans++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="14、"><a href="#14、" class="headerlink" title="14、"></a>14、</h3></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://boluokk.github.io/blog">🍍</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://boluokk.github.io/blog/2023/12/03/leetcode%E5%88%B7%E9%A2%98/">https://boluokk.github.io/blog/2023/12/03/leetcode%E5%88%B7%E9%A2%98/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://boluokk.github.io/blog" target="_blank">🍍Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://source.fomal.cc/img/default_cover_13.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/blog/2023/12/03/SpringCloud/" title="SpringCloud"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_18.webp" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SpringCloud</div></div></a></div><div class="next-post pull-right"><a href="/blog/2023/12/03/spring%E9%9D%A2%E8%AF%95/" title="spring面试"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_37.webp" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">spring面试</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/blog/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">🍍</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">25</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/boluokk"><i class="fab fa-github"></i><span>Follow Me</span><!--i.faa-passing.animated(style="padding-left:20px;display:inline-block;vertical-align:middle;")--><!--  svg.icon(style="height:28px;width:28px;fill:currentColor;position:relative;top:5px")--><!--    use(xlink:href='#icon-xiaoqiche')--></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/boluokk" target="_blank" title="github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:1352955539@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"></div><div id="welcome-info"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%8178-%E5%AD%90%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">1、78. 子集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%812396-%E4%B8%A5%E6%A0%BC%E5%9B%9E%E6%96%87%E7%9A%84%E6%95%B0%E5%AD%97"><span class="toc-number">2.</span> <span class="toc-text">2、2396. 严格回文的数字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%811470-%E9%87%8D%E6%96%B0%E6%8E%92%E5%88%97%E6%95%B0%E7%BB%84"><span class="toc-number">3.</span> <span class="toc-text">3、1470. 重新排列数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81LCP-06-%E6%8B%BF%E7%A1%AC%E5%B8%81"><span class="toc-number">4.</span> <span class="toc-text">3、LCP 06. 拿硬币</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%811769-%E7%A7%BB%E5%8A%A8%E6%89%80%E6%9C%89%E7%90%83%E5%88%B0%E6%AF%8F%E4%B8%AA%E7%9B%92%E5%AD%90%E6%89%80%E9%9C%80%E7%9A%84%E6%9C%80%E5%B0%8F%E6%93%8D%E4%BD%9C%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text">4、1769. 移动所有球到每个盒子所需的最小操作数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%812656-K-%E4%B8%AA%E5%85%83%E7%B4%A0%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C"><span class="toc-number">6.</span> <span class="toc-text">5、2656. K 个元素的最大和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6%E3%80%81LCP-67-%E8%A3%85%E9%A5%B0%E6%A0%91"><span class="toc-number">7.</span> <span class="toc-text">6、LCP 67. 装饰树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7%E3%80%812894-%E5%88%86%E7%B1%BB%E6%B1%82%E5%92%8C%E5%B9%B6%E4%BD%9C%E5%B7%AE"><span class="toc-number">8.</span> <span class="toc-text">7、2894. 分类求和并作差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8%E3%80%811689-%E5%8D%81-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E7%9A%84%E6%9C%80%E5%B0%91%E6%95%B0%E7%9B%AE"><span class="toc-number">9.</span> <span class="toc-text">8、1689. 十-二进制数的最少数目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9%E3%80%811476-%E5%AD%90%E7%9F%A9%E5%BD%A2%E6%9F%A5%E8%AF%A2"><span class="toc-number">10.</span> <span class="toc-text">9、1476. 子矩形查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10%E3%80%811282-%E7%94%A8%E6%88%B7%E5%88%86%E7%BB%84"><span class="toc-number">11.</span> <span class="toc-text">10、1282. 用户分组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11%E3%80%81237-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9"><span class="toc-number">12.</span> <span class="toc-text">11、237. 删除链表中的节点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12%E3%80%812011-%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C%E5%90%8E%E7%9A%84%E5%8F%98%E9%87%8F%E5%80%BC"><span class="toc-number">13.</span> <span class="toc-text">12、2011. 执行操作后的变量值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13%E3%80%811773-%E7%BB%9F%E8%AE%A1%E5%8C%B9%E9%85%8D%E6%A3%80%E7%B4%A2%E8%A7%84%E5%88%99%E7%9A%84%E7%89%A9%E5%93%81%E6%95%B0%E9%87%8F"><span class="toc-number">14.</span> <span class="toc-text">13、1773. 统计匹配检索规则的物品数量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14%E3%80%81"><span class="toc-number">15.</span> <span class="toc-text">14、</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/12/03/SpringCloud/" title="SpringCloud"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_18.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="SpringCloud"/></a><div class="content"><a class="title" href="/blog/2023/12/03/SpringCloud/" title="SpringCloud">SpringCloud</a><time datetime="2023-12-03T08:12:22.000Z" title="发表于 2023-12-03 16:12:22">2023-12-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/12/03/leetcode%E5%88%B7%E9%A2%98/" title="leetcode刷题"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_13.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="leetcode刷题"/></a><div class="content"><a class="title" href="/blog/2023/12/03/leetcode%E5%88%B7%E9%A2%98/" title="leetcode刷题">leetcode刷题</a><time datetime="2023-12-03T08:12:22.000Z" title="发表于 2023-12-03 16:12:22">2023-12-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/12/03/spring%E9%9D%A2%E8%AF%95/" title="spring面试"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_37.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="spring面试"/></a><div class="content"><a class="title" href="/blog/2023/12/03/spring%E9%9D%A2%E8%AF%95/" title="spring面试">spring面试</a><time datetime="2023-12-03T08:12:22.000Z" title="发表于 2023-12-03 16:12:22">2023-12-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/11/28/Netty/" title="Netty"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_27.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Netty"/></a><div class="content"><a class="title" href="/blog/2023/11/28/Netty/" title="Netty">Netty</a><time datetime="2023-11-28T13:11:01.000Z" title="发表于 2023-11-28 21:11:01">2023-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/11/26/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AE%97%E6%B3%95/" title="负载均衡算法"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_17.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="负载均衡算法"/></a><div class="content"><a class="title" href="/blog/2023/11/26/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AE%97%E6%B3%95/" title="负载均衡算法">负载均衡算法</a><time datetime="2023-11-26T13:11:46.000Z" title="发表于 2023-11-26 21:11:46">2023-11-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script><script defer data-pjax src="https://boluokk.github.io/blog/js/cat.js"></script><script defer src="https://boluokk.github.io/blog/js/cursor.js"></script><script async data-pjax src="https://boluokk.github.io/blog/js/txmap.js"></script><canvas id="universe"></canvas><script defer src="https://boluokk.github.io/blog/js/universe.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="🍍,🍉🍈,🍇🥥,🥝,🍊🍋,🥝🍊🍋🍌" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/blog/js/footer-username.js"></script><!-- hexo injector body_end end --></body></html>
