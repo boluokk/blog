@@ -1,0 +1,430 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>spring面试 | 🍍Blog</title><meta name="author" content="🍍"><meta name="copyright" content="🍍"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="spring是什么 spirng是一个基于java语言开发的用于web的轻量级框架， ioc和aop是spring的核心。 并且让开发人员专心于业务开发  spring 中的一些重要组件 core核心组件：其中beans和context是实现IOC的重要依赖（依赖注入） aop组件主要用来做切面编程 web组件实现了web层的技术，例如springmvc对于请求做处理的 websocket：全双工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring面试">
+<meta property="og:url" content="https://boluokk.github.io/blog/2023/12/19/spring%E9%9D%A2%E8%AF%95/index.html">
+<meta property="og:site_name" content="🍍Blog">
+<meta property="og:description" content="spring是什么 spirng是一个基于java语言开发的用于web的轻量级框架， ioc和aop是spring的核心。 并且让开发人员专心于业务开发  spring 中的一些重要组件 core核心组件：其中beans和context是实现IOC的重要依赖（依赖注入） aop组件主要用来做切面编程 web组件实现了web层的技术，例如springmvc对于请求做处理的 websocket：全双工">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://source.fomal.cc/img/default_cover_40.webp">
+<meta property="article:published_time" content="2023-12-19T12:12:03.000Z">
+<meta property="article:modified_time" content="2023-12-19T12:18:03.844Z">
+<meta property="article:author" content="🍍">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://source.fomal.cc/img/default_cover_40.webp"><link rel="shortcut icon" href="/blog/img/favicon.png"><link rel="canonical" href="https://boluokk.github.io/blog/2023/12/19/spring%E9%9D%A2%E8%AF%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/blog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/blog/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'spring面试',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: true,
+  isToc: true,
+  postUpdate: '2023-12-19 20:18:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="https://boluokk.github.io/blog/css/custom.css" media="defer" onload="this.media='all'"><script async src="https://boluokk.github.io/blog/js/fps.js"></script><script async src="https://boluokk.github.io/blog/js/title.js"></script><span id="fps"></span><div id="myscoll"></div><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/css/runtime/runtime.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+document.addEventListener('pjax:send', () => {
+  Pace.restart()
+})
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/blog/assets/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw icon-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw icon-guidang1"></i><span> 归档</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://source.fomal.cc/img/default_cover_40.webp')"><nav id="nav"><span id="blog-info"><a href="/blog/" title="🍍Blog"><span class="site-name">🍍Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/blog/"><i class="fa-fw icon-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/blog/archives/"><i class="fa-fw icon-guidang1"></i><span> 归档</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">spring面试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-19T12:12:03.000Z" title="发表于 2023-12-19 20:12:03">2023-12-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-12-19T12:18:03.844Z" title="更新于 2023-12-19 20:18:03">2023-12-19</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="spring面试"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="spring是什么"><a href="#spring是什么" class="headerlink" title="spring是什么"></a>spring是什么</h2><blockquote>
+<p>spirng是一个基于java语言开发的用于web的轻量级框架，</p>
+<p>ioc和aop是spring的核心。</p>
+<p>并且让开发人员专心于业务开发</p>
+</blockquote>
+<h2 id="spring-中的一些重要组件"><a href="#spring-中的一些重要组件" class="headerlink" title="spring 中的一些重要组件"></a>spring 中的一些重要组件</h2><blockquote>
+<p>core核心组件：其中beans和context是实现IOC的重要依赖（依赖注入）</p>
+<p>aop组件主要用来做切面编程</p>
+<p>web组件实现了web层的技术，例如springmvc对于请求做处理的</p>
+<p>websocket：全双工及时通讯，服务器也能主动发送消息给客户端。</p>
+<p>transactions: spring事务的管理依赖</p>
+<p>JDBC、ORM、OXM等</p>
+<p>Portlet被替换成webflex了</p>
+</blockquote>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://github.com/boluokk/blog/raw/master/assets/blogImg//spring%E9%9D%A2%E8%AF%95.assets/image-20231129170928603.png" alt="image-20231129170928603"></p>
+<h2 id="spring给我们带来了什么好处"><a href="#spring给我们带来了什么好处" class="headerlink" title="spring给我们带来了什么好处"></a>spring给我们带来了什么好处</h2><blockquote>
+<p>对象解耦，对于一些类我们可以交给spring 来管理，而不用每次都自己来创建。这样不仅解决的硬编码的解耦，而且提高了对象的复用</p>
+<p>AOP的支持，对于一些通用的功能，我们无需对很多地方进行修改，而是通过切面编程来处理，例如日志记录、认证权限的处理等</p>
+<p>声明式事务，我们可通过transational这个注解来对事物进行处理，如果处理事务中失败则可回滚恢复数据</p>
+<p>测试的支持，由于spirng提供的ioc，我们在单元测试中可通过直接注入某个实例进行测试，调用需要测试的方法，非常好用</p>
+<p>多框架的支持，spring几乎集成了我们创建的例如mybatis、junit等</p>
+</blockquote>
+<h2 id="聊聊spring-中的IOC"><a href="#聊聊spring-中的IOC" class="headerlink" title="聊聊spring 中的IOC"></a>聊聊spring 中的IOC</h2><blockquote>
+<p>ioc（控制反转）是一种规范，其他语言也能有自己的实现方式。spring 通过依赖注入的方式来实现ioc</p>
+<p>spring中的对象是很多的并且关系可能也是十分复杂的，如果我们手动来管理这些对象，将很繁琐。如果交给spring管理，对象的创建、赋值、初始化都有spring来统一管理执行。这样就让我们有更多精力放在业务上。如果有个对象依赖很深，我们通过手动的方式来创建然后赋值，必定很繁琐。代码也不美观</p>
+</blockquote>
+<h2 id="springIOC的实现原理"><a href="#springIOC的实现原理" class="headerlink" title="springIOC的实现原理"></a>springIOC的实现原理</h2><blockquote>
+<p>spring 在启动的时候会去读取我们的配置文件（xml配置文件或者注解，@Component或者@ Autowired），生成bean的注册表，然后根据这个注册表通过反射实例化bean。最终将这些实例化的bean放入单例池中(一个hashmap)，并且springioc还提供了实例缓存、生命周期管理、bean实例的代理（可能是原来的bean或者代理过得bean，根据配置来）</p>
+</blockquote>
+<h2 id="spirng-的注入方式有哪些"><a href="#spirng-的注入方式有哪些" class="headerlink" title="spirng 的注入方式有哪些"></a>spirng 的注入方式有哪些</h2><h3 id="xml方式"><a href="#xml方式" class="headerlink" title="xml方式"></a>xml方式</h3><blockquote>
+<ol>
+<li>setter方法注入</li>
+<li>构造器注入</li>
+<li>静态工厂方法（需要对象仅调用静态方法即可，无需关注方法内部怎么实现的。直接调；需要自己定义一个工厂，然后注册成工厂，指名工厂方法，其他依赖的ref需要指明这个工厂bean）</li>
+<li>普通工厂，和静态类似，但是需要先创建这个工厂，才能调用这个方法。</li>
+</ol>
+</blockquote>
+<h3 id="注解方式"><a href="#注解方式" class="headerlink" title="注解方式"></a>注解方式</h3><blockquote>
+<ol>
+<li>@Autowired: 默认通过bean类型注入，如果需要来名称则还需要添加@Qualifier配置名称。如果不能唯一指定一个bean会报错。例如：如果有两个相同类型的，但是变量名不同，使用@Primary为首要，@Resource也可以，</li>
+<li>@Resource：默认通过bean名称，如果设置类型则需要两个都相同才能注入</li>
+<li>@Inject：需要下载依赖，和第一个注解类似</li>
+</ol>
+</blockquote>
+<h2 id="注解类型推断"><a href="#注解类型推断" class="headerlink" title="注解类型推断"></a>注解类型推断</h2><blockquote>
+<p>如果我们没有指定用那个构造器来依赖注入属性，spirng会自动帮助我们来选择使用那个构造器注入。其中如果多个构造器的参数一致会从上往下，优先选择。否认按照参数多的来。</p>
+</blockquote>
+<h2 id="Autowired自动装配流程"><a href="#Autowired自动装配流程" class="headerlink" title="@Autowired自动装配流程"></a>@Autowired自动装配流程</h2><blockquote>
+<p>可配置地方：方法、属性、构造器，会先去找到对应的type类型，然后是对应的名称。名称如果自己设置的话会使用设置的名称，还是找不到类型和名称唯一的就报错。其中构造器会有自动推断的功能，一般会根据参数个数来选择使用的构造器进行注入，相同参数个会选择代码中最上面的，参数个数不同就选择参数多的。</p>
+</blockquote>
+<h2 id="Resource自动装配流程"><a href="#Resource自动装配流程" class="headerlink" title="@Resource自动装配流程"></a>@Resource自动装配流程</h2><blockquote>
+<p>可配置地方：属性和方法，会先根据名称查找然后才是类型。如果不唯一还是会报错。</p>
+</blockquote>
+<h2 id="Component和-Bean区别"><a href="#Component和-Bean区别" class="headerlink" title="@Component和@Bean区别"></a>@Component和@Bean区别</h2><blockquote>
+<p>相同：都能注册bean</p>
+<p>不同：</p>
+<ol>
+<li>component应用在类上或者其他注解上，bean一般用在方法上</li>
+<li>component应用在很多注解里，比如controller、service、configration等</li>
+<li>bean能直接在注解内可以指定初始方法和销毁前方法等</li>
+<li>component使用更简单</li>
+</ol>
+</blockquote>
+<h2 id="Value中的-和-区别"><a href="#Value中的-和-区别" class="headerlink" title="@Value中的$和#区别"></a>@Value中的$和#区别</h2><blockquote>
+<p>${}代表环境信息，一般获取环境信息，spring cloud和spring boot中的application.properties文件中的内容和nacos配置中动态获取某个配置信息</p>
+<p>#{}可以为属性进行赋值，例如对某个属性注入值（依赖注入）</p>
+</blockquote>
+<h2 id="springbean的理解"><a href="#springbean的理解" class="headerlink" title="springbean的理解"></a>springbean的理解</h2><blockquote>
+<p>springbean是由spring管理创建的bean，这个bean可能是实体对象也有可能是controller、service或者dao对象。它并不和我们直接new出来的对象是一样的，它是通过反射来创建的，在创建过程中会对bean的属性进行赋值、依赖注入以及一些aop的处理操作，并且可能返回的并不是原始bean，而是被代理过得bean。所以和我们手动new出来的bean，然后手动去赋值，处理一些依赖管理有本质区别。</p>
+</blockquote>
+<h2 id="定义bean-的方式有那些"><a href="#定义bean-的方式有那些" class="headerlink" title="定义bean 的方式有那些"></a>定义bean 的方式有那些</h2><blockquote>
+<ol>
+<li>xml</li>
+<li>注解：component、controller、service。。。</li>
+<li>利用spring的容器去注册bean</li>
+<li>@Import + 其他注解(component、configration..)</li>
+</ol>
+</blockquote>
+<h2 id="bean的作用域"><a href="#bean的作用域" class="headerlink" title="bean的作用域"></a>bean的作用域</h2><blockquote>
+<p>单例 （默认）</p>
+<p>原型(多例)</p>
+<p>request</p>
+<p>session：仅仅在portlet中有用，但是spring 5 使用webflex替换了portlet，所以已经无法使用了</p>
+<p>websocket</p>
+<p>注解通过scope，xml也是配置scope这个属性</p>
+</blockquote>
+<h2 id="spring-懒加载机制（延迟加载）"><a href="#spring-懒加载机制（延迟加载）" class="headerlink" title="spring 懒加载机制（延迟加载）"></a>spring 懒加载机制（延迟加载）</h2><blockquote>
+<p>如果开启懒加载(注解@Lazy)，仅在我们使用的时候才创建初始化bean</p>
+</blockquote>
+<h2 id="spring控制bean的加载顺序"><a href="#spring控制bean的加载顺序" class="headerlink" title="spring控制bean的加载顺序"></a>spring控制bean的加载顺序</h2><p>如果有两个beanA和beanB，其中beanA需要操作beanB的数据，如果beanB的加载在beanA的后面，就会出问题</p>
+<blockquote>
+<ol>
+<li>@DependsOn 注解来提前加载</li>
+<li>通过@Bean注解，默认没有参数会根据代码从上往下加载，如果参数中有其他，则会先加载参数中的(初始化a中需要b，就会去先加载b)</li>
+</ol>
+</blockquote>
+<h2 id="spring的内部bean-inner-bean"><a href="#spring的内部bean-inner-bean" class="headerlink" title="spring的内部bean(inner bean)"></a>spring的内部bean(inner bean)</h2><blockquote>
+<p>不用注册格外的id来声明bean，直接设置需要依赖这个bean的property，通过这种匿名方式在注入bean。setter和构造方法都可以(xml中)</p>
+</blockquote>
+<h2 id="springAOP"><a href="#springAOP" class="headerlink" title="springAOP"></a>springAOP</h2><blockquote>
+<p>对于程序中，有一些公共的功能，可用过aop来实现，这样不用到每个功能中去添加重复代码，修改起来也不方便，一个地方修改牵连多处代码，难以维护。具体一些功能有：请求日志监控、性能检测、一些鉴权的功能, 以及事务切面。</p>
+</blockquote>
+<blockquote>
+<ol>
+<li>切面：在Java中某个类，管理切点和通知，一种功能类表示一个切面</li>
+<li>连接点：需要增强的方法</li>
+<li>切点：通过切点表达式来决定那些方法需要增强和那些方法不需要增强</li>
+<li>织入：目标对象创建动态代理过程</li>
+<li>通知：对增强方法的具体增强逻辑，前置通知，后置通知，异常通知，最终通知、环绕通知</li>
+<li>顾问(Advisor)：对通知和切点的包装，管理通知和切点</li>
+<li>引入：可以将其他接口和实现动态引入targetclass</li>
+<li>目标对象：需要被增强的目标对象，原来的业务对象</li>
+</ol>
+</blockquote>
+<h2 id="FactoryBean和BeanFoctory区别"><a href="#FactoryBean和BeanFoctory区别" class="headerlink" title="FactoryBean和BeanFoctory区别"></a>FactoryBean和BeanFoctory区别</h2><blockquote>
+<p>factoryBean也是一个bean，受beanfactoryBean管理，</p>
+<p>如果我们实现了factoryBean，然后返回的不是原来的bean而是实现的getObject这个方法返回的bean （getBean的时候添加&amp;符号可获得原来的bean）</p>
+</blockquote>
+<h2 id="IOC容器加载过程"><a href="#IOC容器加载过程" class="headerlink" title="IOC容器加载过程"></a>IOC容器加载过程</h2><blockquote>
+<ol>
+<li>实例化一个applicationContext的对象</li>
+<li>调用bean工厂后置处理器来完成扫描</li>
+<li>循环解析扫描出来的类信息</li>
+<li>实例化一个beanDefinition，并放入到beanDefinitionMap中缓存，以便后续实例化使用</li>
+<li>再次调用其他bean工厂后置处理器</li>
+<li>实例化之前会对bean做验证，判定这个bean是否是懒加载是否是非单例的等等</li>
+<li>验证完成，spring会自动推断然后调用构造方法，然后通过反射实例化对象；此对象现在并不完整，可能还需要对属性进行注入。</li>
+<li>然后判定bean类型调用aware接口，再调用生命周期回调方法，如果需要代理则完成代理</li>
+<li>创建完成，将bean对象放入singletonObjects中</li>
+</ol>
+</blockquote>
+<h2 id="spring-IOC有哪些扩展点，什么时候调用"><a href="#spring-IOC有哪些扩展点，什么时候调用" class="headerlink" title="spring IOC有哪些扩展点，什么时候调用"></a>spring IOC有哪些扩展点，什么时候调用</h2><blockquote>
+<p>在注册bean定义的时候：</p>
+<p>BeanDefinitionRegistryPostProcessor：实现此接口，可手动对bena定义定义和操作（这个接口继承了下面接口）<br>BeanFactoryPostProcessor：实现此接口可对bean定义可以操作，不可以获取bean定义</p>
+<p>在初始化bean的时候：</p>
+<p>BeanNameAware、BeanFactoryAware等，BeanPostProcessor 对bean初始化前后操作</p>
+<p>在bean销毁的时候：</p>
+<p>DisposableBean或者xml配置文件中设置销毁方法</p>
+</blockquote>
+<h2 id="spring-的bena-是线程安全的吗"><a href="#spring-的bena-是线程安全的吗" class="headerlink" title="spring 的bena 是线程安全的吗"></a>spring 的bena 是线程安全的吗</h2><blockquote>
+<p>spring中默认的bean的实例作用域是单例的，是需要看你的操作变量是属于类的还是方法的如果是方法的则是安全否则不安全除非对方法加了锁之类的</p>
+<p>还是看代码具体是怎么写的。</p>
+</blockquote>
+<h2 id="spring-中如何处理并发问题"><a href="#spring-中如何处理并发问题" class="headerlink" title="spring 中如何处理并发问题"></a>spring 中如何处理并发问题</h2><blockquote>
+<ol>
+<li>设置作用域为多例</li>
+<li>加锁</li>
+<li>threadlocal</li>
+</ol>
+</blockquote>
+<h2 id="spring-实例化bean的方式"><a href="#spring-实例化bean的方式" class="headerlink" title="spring 实例化bean的方式"></a>spring 实例化bean的方式</h2><blockquote>
+<ol>
+<li>反射：xml配置中有类的全路径，然后反射出对象</li>
+<li>静态工厂：xml配置中指定静态工厂实例化</li>
+<li>实例工厂：通过指定factory-bean、和factory-method来指定工厂和生产实例的工厂方法</li>
+<li>FactoryBean方式：实现factoryBean的getObjects方法返回任意Bean</li>
+</ol>
+</blockquote>
+<h2 id="spring-的生命周期"><a href="#spring-的生命周期" class="headerlink" title="spring 的生命周期"></a>spring 的生命周期</h2><blockquote>
+<ol>
+<li>实例化</li>
+<li>依赖注入</li>
+<li>初始化（初始化前后有个postprocessor可以自定义）</li>
+<li>使用</li>
+<li>销毁</li>
+</ol>
+</blockquote>
+<h2 id="spring-在并发情况下怎么避免获取不完整的bean"><a href="#spring-在并发情况下怎么避免获取不完整的bean" class="headerlink" title="spring 在并发情况下怎么避免获取不完整的bean"></a>spring 在并发情况下怎么避免获取不完整的bean</h2><blockquote>
+<p>通过双重检查锁的方式处理，线程a 初始化对象时会将二三级缓存给加上锁，线程b后入发现一级缓存中没有想要的bean实例，就回去二三级中查找，此时就会堵塞住。a线程处理完成后，线程b会再一次去尝试拿去，此时就会拿到想要的bena实例。如果还是没有则线程b才会去创建这个想要的bean</p>
+</blockquote>
+<h2 id="描述创建beandefinition的加载过程"><a href="#描述创建beandefinition的加载过程" class="headerlink" title="描述创建beandefinition的加载过程"></a>描述创建beandefinition的加载过程</h2><blockquote>
+<p>当我们去创建一个spring容器的时候，spirng去读取配置信息，然后解析配置去，比如：如果是去解析component的话，就会去扫描带有这注解的类，将这个类的信息注册为beandefinition，然后放入到beandefinitionMap中。</p>
+</blockquote>
+<h2 id="如何在spring的bean创建完成后做扩展"><a href="#如何在spring的bean创建完成后做扩展" class="headerlink" title="如何在spring的bean创建完成后做扩展"></a>如何在spring的bean创建完成后做扩展</h2><blockquote>
+<p>实现 SmartInitializingSingleton </p>
+<p>还有一种通过spring的事件来通知bena已经加载完毕了。refreshEvent</p>
+</blockquote>
+<h2 id="如何在所有BeanDefinition注册完成后做扩展"><a href="#如何在所有BeanDefinition注册完成后做扩展" class="headerlink" title="如何在所有BeanDefinition注册完成后做扩展"></a>如何在所有BeanDefinition注册完成后做扩展</h2><blockquote>
+<p>实现 beanFctoryPostProcessor（bean工厂后置处理器）; </p>
+<p>bean实例是 beanPostProcessor</p>
+</blockquote>
+<h2 id="bean的生产顺序是由什么确定的"><a href="#bean的生产顺序是由什么确定的" class="headerlink" title="bean的生产顺序是由什么确定的"></a>bean的生产顺序是由什么确定的</h2><blockquote>
+<p>是有beandefinition来决定的；</p>
+<p>beandefinition是有注解配置解析的顺序确定的</p>
+<p>@Configuration &gt; @Component &gt; @Import一类 &gt; @Bean &gt; @Import</p>
+</blockquote>
+<h2 id="Import几种用法"><a href="#Import几种用法" class="headerlink" title="@Import几种用法"></a>@Import几种用法</h2><blockquote>
+<ol>
+<li>@Import(User.class)，直接注册一个bena</li>
+<li>@Import(ImportSelectorTest.class), 放入一个实现了ImportSelector接口的类，可注册多个bean</li>
+<li>@Import(ImportBeanDefinitionRegistrarTest.class), 这种是对bean定义的操作，可通过注册bean定义</li>
+</ol>
+</blockquote>
+<h2 id="Configuration的作用和原理"><a href="#Configuration的作用和原理" class="headerlink" title="@Configuration的作用和原理"></a>@Configuration的作用和原理</h2><blockquote>
+<p>用于代替xml方式配置，可以配置一些bean信息，以及一些数据源信息。</p>
+<p>此注解中包含了@component注解</p>
+</blockquote>
+<h2 id="Bean方法调用如何保证是单例的"><a href="#Bean方法调用如何保证是单例的" class="headerlink" title="@Bean方法调用如何保证是单例的"></a>@Bean方法调用如何保证是单例的</h2><blockquote>
+<p>@Configuration中的cglib动态代理来保证的。通过对配置类的增强，对与@Bean的方法进行增强，实际会去IOC容器中获取这个bean 的单例</p>
+</blockquote>
+<h2 id="注册一个第三方的Bean"><a href="#注册一个第三方的Bean" class="headerlink" title="注册一个第三方的Bean"></a>注册一个第三方的Bean</h2><blockquote>
+<ol>
+<li>通过@Improt注解</li>
+<li>通过@Bean来手动new</li>
+<li>Bean定义注册后置处理器</li>
+</ol>
+</blockquote>
+<h2 id="为什么没有设置-CompoentScan没有设置也能扫描到"><a href="#为什么没有设置-CompoentScan没有设置也能扫描到" class="headerlink" title="为什么没有设置@CompoentScan没有设置也能扫描到"></a>为什么没有设置@CompoentScan没有设置也能扫描到</h2><blockquote>
+<p>如果设置了就会使用你设置的，如果没有设置，就会把当前类的路径设置为默认的路径。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://boluokk.github.io/blog">🍍</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://boluokk.github.io/blog/2023/12/19/spring%E9%9D%A2%E8%AF%95/">https://boluokk.github.io/blog/2023/12/19/spring%E9%9D%A2%E8%AF%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://boluokk.github.io/blog" target="_blank">🍍Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://source.fomal.cc/img/default_cover_40.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/blog/2023/12/05/%E5%B8%B8%E8%A7%81%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95/" title="常见限流算法"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_27.webp" onerror="onerror=null;src='/blog/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">常见限流算法</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/blog/assets/img/avatar.jpg" onerror="this.onerror=null;this.src='/blog/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">🍍</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/blog/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/blog/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/blog/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/boluokk"><i class="fab fa-github"></i><span>Follow Me</span><!--i.faa-passing.animated(style="padding-left:20px;display:inline-block;vertical-align:middle;")--><!--  svg.icon(style="height:28px;width:28px;fill:currentColor;position:relative;top:5px")--><!--    use(xlink:href='#icon-xiaoqiche')--></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/boluokk" target="_blank" title="github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:1352955539@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"></div><div id="welcome-info"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#spring%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">spring是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E9%87%8D%E8%A6%81%E7%BB%84%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">spring 中的一些重要组件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring%E7%BB%99%E6%88%91%E4%BB%AC%E5%B8%A6%E6%9D%A5%E4%BA%86%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84"><span class="toc-number">3.</span> <span class="toc-text">spring给我们带来了什么好处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%8A%E8%81%8Aspring-%E4%B8%AD%E7%9A%84IOC"><span class="toc-number">4.</span> <span class="toc-text">聊聊spring 中的IOC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springIOC%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">5.</span> <span class="toc-text">springIOC的实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spirng-%E7%9A%84%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">6.</span> <span class="toc-text">spirng 的注入方式有哪些</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xml%E6%96%B9%E5%BC%8F"><span class="toc-number">6.1.</span> <span class="toc-text">xml方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F"><span class="toc-number">6.2.</span> <span class="toc-text">注解方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="toc-number">7.</span> <span class="toc-text">注解类型推断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Autowired%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%B5%81%E7%A8%8B"><span class="toc-number">8.</span> <span class="toc-text">@Autowired自动装配流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resource%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E6%B5%81%E7%A8%8B"><span class="toc-number">9.</span> <span class="toc-text">@Resource自动装配流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Component%E5%92%8C-Bean%E5%8C%BA%E5%88%AB"><span class="toc-number">10.</span> <span class="toc-text">@Component和@Bean区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Value%E4%B8%AD%E7%9A%84-%E5%92%8C-%E5%8C%BA%E5%88%AB"><span class="toc-number">11.</span> <span class="toc-text">@Value中的$和#区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springbean%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-number">12.</span> <span class="toc-text">springbean的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89bean-%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9C%89%E9%82%A3%E4%BA%9B"><span class="toc-number">13.</span> <span class="toc-text">定义bean 的方式有那些</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">14.</span> <span class="toc-text">bean的作用域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-%E6%87%92%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%EF%BC%88%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%EF%BC%89"><span class="toc-number">15.</span> <span class="toc-text">spring 懒加载机制（延迟加载）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring%E6%8E%A7%E5%88%B6bean%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%A1%BA%E5%BA%8F"><span class="toc-number">16.</span> <span class="toc-text">spring控制bean的加载顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring%E7%9A%84%E5%86%85%E9%83%A8bean-inner-bean"><span class="toc-number">17.</span> <span class="toc-text">spring的内部bean(inner bean)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#springAOP"><span class="toc-number">18.</span> <span class="toc-text">springAOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FactoryBean%E5%92%8CBeanFoctory%E5%8C%BA%E5%88%AB"><span class="toc-number">19.</span> <span class="toc-text">FactoryBean和BeanFoctory区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IOC%E5%AE%B9%E5%99%A8%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">20.</span> <span class="toc-text">IOC容器加载过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-IOC%E6%9C%89%E5%93%AA%E4%BA%9B%E6%89%A9%E5%B1%95%E7%82%B9%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%B0%83%E7%94%A8"><span class="toc-number">21.</span> <span class="toc-text">spring IOC有哪些扩展点，什么时候调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-%E7%9A%84bena-%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97"><span class="toc-number">22.</span> <span class="toc-text">spring 的bena 是线程安全的吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-%E4%B8%AD%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98"><span class="toc-number">23.</span> <span class="toc-text">spring 中如何处理并发问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-%E5%AE%9E%E4%BE%8B%E5%8C%96bean%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">24.</span> <span class="toc-text">spring 实例化bean的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">25.</span> <span class="toc-text">spring 的生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-%E5%9C%A8%E5%B9%B6%E5%8F%91%E6%83%85%E5%86%B5%E4%B8%8B%E6%80%8E%E4%B9%88%E9%81%BF%E5%85%8D%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%AE%8C%E6%95%B4%E7%9A%84bean"><span class="toc-number">26.</span> <span class="toc-text">spring 在并发情况下怎么避免获取不完整的bean</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0%E5%88%9B%E5%BB%BAbeandefinition%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="toc-number">27.</span> <span class="toc-text">描述创建beandefinition的加载过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8spring%E7%9A%84bean%E5%88%9B%E5%BB%BA%E5%AE%8C%E6%88%90%E5%90%8E%E5%81%9A%E6%89%A9%E5%B1%95"><span class="toc-number">28.</span> <span class="toc-text">如何在spring的bean创建完成后做扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E6%89%80%E6%9C%89BeanDefinition%E6%B3%A8%E5%86%8C%E5%AE%8C%E6%88%90%E5%90%8E%E5%81%9A%E6%89%A9%E5%B1%95"><span class="toc-number">29.</span> <span class="toc-text">如何在所有BeanDefinition注册完成后做扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bean%E7%9A%84%E7%94%9F%E4%BA%A7%E9%A1%BA%E5%BA%8F%E6%98%AF%E7%94%B1%E4%BB%80%E4%B9%88%E7%A1%AE%E5%AE%9A%E7%9A%84"><span class="toc-number">30.</span> <span class="toc-text">bean的生产顺序是由什么确定的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Import%E5%87%A0%E7%A7%8D%E7%94%A8%E6%B3%95"><span class="toc-number">31.</span> <span class="toc-text">@Import几种用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuration%E7%9A%84%E4%BD%9C%E7%94%A8%E5%92%8C%E5%8E%9F%E7%90%86"><span class="toc-number">32.</span> <span class="toc-text">@Configuration的作用和原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%98%AF%E5%8D%95%E4%BE%8B%E7%9A%84"><span class="toc-number">33.</span> <span class="toc-text">@Bean方法调用如何保证是单例的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%80%E4%B8%AA%E7%AC%AC%E4%B8%89%E6%96%B9%E7%9A%84Bean"><span class="toc-number">34.</span> <span class="toc-text">注册一个第三方的Bean</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%B2%A1%E6%9C%89%E8%AE%BE%E7%BD%AE-CompoentScan%E6%B2%A1%E6%9C%89%E8%AE%BE%E7%BD%AE%E4%B9%9F%E8%83%BD%E6%89%AB%E6%8F%8F%E5%88%B0"><span class="toc-number">35.</span> <span class="toc-text">为什么没有设置@CompoentScan没有设置也能扫描到</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/12/19/spring%E9%9D%A2%E8%AF%95/" title="spring面试"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_40.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="spring面试"/></a><div class="content"><a class="title" href="/blog/2023/12/19/spring%E9%9D%A2%E8%AF%95/" title="spring面试">spring面试</a><time datetime="2023-12-19T12:12:03.000Z" title="发表于 2023-12-19 20:12:03">2023-12-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/12/05/%E5%B8%B8%E8%A7%81%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95/" title="常见限流算法"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_27.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="常见限流算法"/></a><div class="content"><a class="title" href="/blog/2023/12/05/%E5%B8%B8%E8%A7%81%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95/" title="常见限流算法">常见限流算法</a><time datetime="2023-12-05T11:12:32.000Z" title="发表于 2023-12-05 19:12:32">2023-12-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/12/03/SpringCloud/" title="SpringCloud"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_22.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="SpringCloud"/></a><div class="content"><a class="title" href="/blog/2023/12/03/SpringCloud/" title="SpringCloud">SpringCloud</a><time datetime="2023-12-03T08:12:22.000Z" title="发表于 2023-12-03 16:12:22">2023-12-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/12/03/leetcode%E5%88%B7%E9%A2%98/" title="leetcode刷题"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_16.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="leetcode刷题"/></a><div class="content"><a class="title" href="/blog/2023/12/03/leetcode%E5%88%B7%E9%A2%98/" title="leetcode刷题">leetcode刷题</a><time datetime="2023-12-03T08:12:22.000Z" title="发表于 2023-12-03 16:12:22">2023-12-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/blog/2023/11/28/Netty/" title="Netty"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://source.fomal.cc/img/default_cover_15.webp" onerror="this.onerror=null;this.src='/blog/img/404.jpg'" alt="Netty"/></a><div class="content"><a class="title" href="/blog/2023/11/28/Netty/" title="Netty">Netty</a><time datetime="2023-11-28T13:11:01.000Z" title="发表于 2023-11-28 21:11:01">2023-11-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/blog/js/utils.js"></script><script src="/blog/js/main.js"></script><script src="/blog/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script><script defer data-pjax src="https://boluokk.github.io/blog/js/cat.js"></script><script defer src="https://boluokk.github.io/blog/js/cursor.js"></script><script async data-pjax src="https://boluokk.github.io/blog/js/txmap.js"></script><canvas id="universe"></canvas><script defer src="https://boluokk.github.io/blog/js/universe.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="🍍,🍉🍈,🍇🥥,🥝,🍊🍋,🥝🍊🍋🍌" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/blog/js/footer-username.js"></script><!-- hexo injector body_end end --></body></html>
